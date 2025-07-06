@@ -85,7 +85,6 @@ function RelayServer.new(GUID: string | Instance, Module: RelayModule, Whitelist
 
 	local function eventCallback(player: Player, method: string, ...: any?): any?
 		local moduleFunc = Module[method]
-		print(Whitelist)
 
 		if not moduleFunc then
 			warn(`Method {method} does not exist in requested module: !({self._networkingTag})`)
