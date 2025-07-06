@@ -70,8 +70,6 @@ function RelayServer.new(GUID: string | Instance, Module: RelayModule, Whitelist
 	self._event = event
 	self._func = func
 
-	self._networkingTag = "relay." .. HttpService:GenerateGUID(false):sub(1, 13)
-
 	if typeof(self.GUID) == "Instance" then
 		self.GUID = GUID.Name
 		self.instance = GUID
@@ -81,12 +79,13 @@ function RelayServer.new(GUID: string | Instance, Module: RelayModule, Whitelist
 		end)
 	end
 
-	--assert(remotesContainer:FindFirstChild(self.GUID), `GUID {GUID} already exists as a container`)
+	assert(not remotesContainer:FindFirstChild(self.GUID), `GUID {GUID} already exists as a container`)
 	remotes.Name = self.GUID
 	remotes.Parent = remotesContainer
 
 	local function eventCallback(player: Player, method: string, ...: any?): any?
 		local moduleFunc = Module[method]
+		print(Whitelist)
 
 		if not moduleFunc then
 			warn(`Method {method} does not exist in requested module: !({self._networkingTag})`)
@@ -117,11 +116,11 @@ end
 ]=]
 function RelayServer:fire(players: PlayerGroup, method: string, ...: any?): ()
 	if typeof(players) == "Instance" then
-		self.event:FireClient(players, method, ...)
+		self._event:FireClient(players, method, ...)
 	end
 
 	for _, Player in players do
-		self.event:FireClient(Player, method, ...)
+		self._event:FireClient(Player, method, ...)
 	end
 end
 
@@ -133,7 +132,7 @@ end
 	@return ()  
 ]=]
 function RelayServer:fireAll(method: string, ...: any?): ()
-	self.event:FireAllClients(method, ...)
+	self._event:FireAllClients(method, ...)
 end
 
 --[=[
@@ -147,7 +146,7 @@ end
 function RelayServer:fireAllExcept(players: PlayerGroup, method: string, ...: any?): ()
 	for _, Player in Players:GetChildren() do
 		if not table.find(players, Player) then
-			self.event:FireClient(Player, method, ...)
+			self._event:FireClient(Player, method, ...)
 		end
 	end
 end
