@@ -1,0 +1,15 @@
+#Roblox model and place files in the root, used for debugging
+/*.rbxm
+/*.rbxmx
+/*.rbxl
+/*.rbxlx
+
+# Sourcemap for the Rojo plugin (for better intellisense)
+/sourcemap.json
+
+# Roblox Studio holds 'lock' files on places
+*.rbxl.lock
+*.rbxlx.lock
+
+roblox.toml
+sourcemap.json
