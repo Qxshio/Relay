@@ -14,7 +14,7 @@ local TestService = {Cash = 0}
 TestService.__index = TestService
 
 -- Creates TestService on the client
-TestService._Relay = Relay.new("TestService", TestService)
+TestService.Relay = Relay.new("TestService", TestService)
 ```
 
 ### Server
@@ -26,8 +26,10 @@ local Relay = require(ReplicatedStorage.Relay)
 local TestService = {Cash = 500}
 TestService.__index = TestService
 
--- Creates "TestService" with the only whitelisted function being TestService:getCash()
-TestService._Relay = Relay.new("TestService", TestService, {TestService.getCash})
+function TestService:init()
+     -- Creates "TestService" with the only whitelisted function being TestService:getCash()
+     self.Relay = Relay.new("TestService", self, {self.getCash})
+end
 ```
 
 ## Example
@@ -58,7 +60,10 @@ local Relay = require(ReplicatedStorage.Relay)
 local TestService = {Cash = 500}
 TestService.__index = TestService
 
-TestService._Relay = Relay.new("TestService", TestService, {TestService.getCash})
+function TestService:init()
+     -- Creates "TestService" with the only whitelisted function being TestService:getCash()
+     self.Relay = Relay.new("TestService", self, {self.getCash})
+end
 
 function TestService:getCash()
      return self.Cash
