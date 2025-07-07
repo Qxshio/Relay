@@ -87,7 +87,7 @@ function RelayServer.new(GUID: string | Instance, Module: RelayModule, Whitelist
 		local moduleFunc = Module[method]
 
 		if not moduleFunc then
-			warn(`Method {method} does not exist in requested module: !({self._networkingTag})`)
+			warn(`Method {method} does not exist in requested module: !({self.GUID})`)
 			return
 		end
 
