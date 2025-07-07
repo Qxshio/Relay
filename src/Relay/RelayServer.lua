@@ -143,6 +143,10 @@ function RelayServer:setValueFromStringIndex(Player: Player, module: {}, Whiteli
 		local allowed = false
 
 		for _, pattern in ipairs(Whitelist) do
+			if not (typeof(pattern) == "string") then
+				continue
+			end
+
 			local filteredPattern = "^"
 				.. pattern:gsub("%%", "%%%%"):gsub("%.", "%%."):gsub("%*%*", ".+"):gsub("%*", "[^%.]+")
 				.. "$"
