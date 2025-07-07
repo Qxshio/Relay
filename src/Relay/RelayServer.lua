@@ -33,6 +33,8 @@ export type RelayServer = typeof(setmetatable(
 		_networkingTag: string,
 		_instanceConn: RBXScriptSignal | nil,
 
+		_referentialIntegrityFlag: (Player) -> (),
+
 		remotes: Folder,
 		instance: Instance | nil,
 	},
@@ -60,6 +62,8 @@ function RelayServer.new(GUID: string | Instance, Module: RelayModule, Whitelist
 		return self
 	end
 
+	Whitelist = Whitelist or {}
+
 	local remotes = Instance.new("Folder")
 	local event = Instance.new("RemoteEvent")
 	local func = Instance.new("RemoteFunction")
@@ -84,6 +88,10 @@ function RelayServer.new(GUID: string | Instance, Module: RelayModule, Whitelist
 	remotes.Parent = remotesContainer
 
 	local function eventCallback(player: Player, method: string, ...: any?): any?
+		if method == RelayUtil.TAG_SET then
+			self:setValueFromStringIndex(player, Module, Whitelist, ...)
+			return
+		end
 		local moduleFunc = Module[method]
 
 		if not moduleFunc then
@@ -103,6 +111,93 @@ function RelayServer.new(GUID: string | Instance, Module: RelayModule, Whitelist
 	func.OnServerInvoke = eventCallback
 
 	return self :: RelayServer
+end
+
+--[=[
+	Sets a value in a nested table structure using a dot-separated string path.
+	
+	This function navigates through the given `module` table using the `stringPath`,
+	and sets the specified `value` at the targeted key. It performs optional referential
+	integrity checks to ensure that the type of the new value matches the existing one,
+	if `RelayServer._referentialIntegrityFlag` is defined.
+
+	@param Player Player -- The player attempting to set the value (used for integrity flagging)
+	@param module table -- The root table to navigate and update
+	@param stringPath string -- The dot-separated path indicating where to set the value
+	@param value any -- The new value to assign at the specified path
+]=]
+function RelayServer:setValueFromStringIndex(Player: Player, module: {}, Whitelist: {}?, ...)
+	local args = { ... }
+	local stringPath = args[1]
+	local value = args[2]
+
+	if not (typeof(stringPath) == "string") then
+		warn(`Invalid string path ({stringPath})`)
+		return
+	end
+
+	if Whitelist then
+		local allowed = false
+
+		for _, pattern in ipairs(Whitelist) do
+			local filteredPattern = "^"
+				.. pattern:gsub("%%", "%%%%"):gsub("%.", "%%."):gsub("%*%*", ".+"):gsub("%*", "[^%.]+")
+				.. "$"
+			if string.match(stringPath, filteredPattern) then
+				allowed = true
+				break
+			end
+		end
+
+		if not allowed then
+			warn(`Blocked unauthorized path: "{stringPath}"`)
+			return
+		end
+	end
+
+	local current = module
+	local path = string.split(stringPath, ".")
+
+	for i = 1, #path - 1 do
+		local key = path[i]
+
+		if typeof(current) ~= "table" or current[key] == nil then
+			warn(`Invalid path segment "{key}" at position {i} in path "{stringPath}"`)
+			return
+		end
+		current = current[key]
+	end
+
+	local lastKey = path[#path]
+	if typeof(current) == "table" then
+		local old = current[lastKey]
+		local flagFunc = self._referentialIntegrityFlag
+		if flagFunc and old then
+			local correctType = typeof(old)
+			local newType = typeof(value)
+
+			if not (correctType == newType) then
+				task.spawn(flagFunc, Player)
+				return
+			end
+		end
+
+		current[lastKey] = value
+	else
+		warn(`Cannot set value at path "{stringPath}", parent is not a table`)
+	end
+end
+
+--[=[
+	Sets a callback function to enforce referential integrity during value assignment.
+
+	When a value is set via `setValueFromStringIndex`, this callback is invoked if the
+	new value's type does not match the existing value's type at the target path.
+
+	@param Callback (Player) -> () -- A function called with the Player when a type mismatch occurs
+]=]
+function RelayServer:enforceReferentialIntegrity(Callback)
+	self._referencialIntegrityFlag = Callback
 end
 
 --[=[
