@@ -116,6 +116,7 @@ end
 function RelayServer:fire(players: PlayerGroup, method: string, ...: any?): ()
 	if typeof(players) == "Instance" then
 		self._event:FireClient(players, method, ...)
+		return
 	end
 
 	for _, Player in players do
