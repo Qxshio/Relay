@@ -112,6 +112,18 @@ function RelayClient:fetchAsync(method: string, ...: any?)
 end
 
 --[=[
+	Sends a request to the server to update a value at a specified path.
+
+	@param path string -- The dot-separated path indicating where to set the value on the server
+	@param value any -- The new value to assign at the specified path
+]=]
+function RelayClient:postDataAsync(path: string, value: any)
+	assert(path and value, `Path or value missing for setServerData`)
+	assert(typeof(path) == "string", `Path "{path}" must be a string, e.g: Settings.MaxVolume`)
+	self.remotes.RemoteFunction:InvokeServer(RelayUtil.TAG_SET, path, value)
+end
+
+--[=[
 	Destoys the RelayClient
 
 	@return ()  
@@ -125,4 +137,4 @@ function RelayClient:destroy()
 	end
 end
 
-return RelayClient
+return RelayClient :: RelayClient

@@ -1,4 +1,3 @@
-local HttpService = game:GetService("HttpService")
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 
@@ -10,6 +9,7 @@ if RunService:IsRunning() and RunService:IsServer() then
 end
 
 local RelayUtil = require(script.Parent.RelayUtil)
+local Sift = require(script.Parent.Packages.Sift)
 
 type RelayModule = RelayUtil.RelayModule
 type RelayWhitelist = RelayUtil.RelayWhitelist
@@ -92,25 +92,79 @@ function RelayServer.new(GUID: string | Instance, Module: RelayModule, Whitelist
 			self:setValueFromStringIndex(player, Module, Whitelist, ...)
 			return
 		end
+
 		local moduleFunc = Module[method]
+		if not moduleFunc then
+			moduleFunc = method
+		end
 
 		if not moduleFunc then
 			warn(`Method {method} does not exist in requested module: !({self.GUID})`)
 			return
 		end
 
-		if not table.find(Whitelist, moduleFunc) then
+		if
+			not (
+				typeof(moduleFunc) == "function" and table.find(Whitelist, moduleFunc)
+				or self:propertyChangeAllowed(moduleFunc, Whitelist)
+			)
+		then
 			warn(`Requested method {method} is not whitelisted on the server`)
 			return
 		end
 
-		return moduleFunc(player, ...)
+		if typeof(moduleFunc) == "function" then
+			return moduleFunc(player, ...)
+		else
+			local tree, lastKey = self:getModuleTreeFromString(moduleFunc, Module)
+			return tree[lastKey]
+		end
 	end
 
 	event.OnServerEvent:Connect(eventCallback)
 	func.OnServerInvoke = eventCallback
 
 	return self :: RelayServer
+end
+
+function RelayServer:propertyChangeAllowed(stringPath: string, Whitelist: {})
+	local allowed = false
+
+	for _, pattern in ipairs(Whitelist) do
+		if not (typeof(pattern) == "string") then
+			continue
+		end
+
+		local filteredPattern = "^" .. pattern:gsub("%.", "%%."):gsub("%*", ".*") .. "$"
+
+		if string.match(stringPath, filteredPattern) then
+			allowed = true
+			break
+		end
+	end
+	return Whitelist and allowed
+end
+
+function RelayServer:getModuleTreeFromString(stringPath: string, module: {})
+	if not (typeof(stringPath) == "string") then
+		warn(`Invalid string path ({stringPath})`)
+		return
+	end
+
+	local current = module
+	local path = string.split(stringPath, ".")
+
+	for i = 1, #path - 1 do
+		local key = path[i]
+
+		if typeof(current) ~= "table" or current[key] == nil then
+			warn(`Invalid path segment "{key}" at position {i} in path "{stringPath}"`)
+			return
+		end
+		current = current[key]
+	end
+
+	return current, path[#path]
 end
 
 --[=[
@@ -134,62 +188,46 @@ function RelayServer:setValueFromStringIndex(Player: Player, module: {}, Whiteli
 	local stringPath = args[1]
 	local value = args[2]
 
-	if not (typeof(stringPath) == "string") then
-		warn(`Invalid string path ({stringPath})`)
+	if not self:propertyChangeAllowed(stringPath, Whitelist) then
+		warn(`Blocked unauthorized path: "{stringPath}"`)
 		return
 	end
 
-	if Whitelist then
-		local allowed = false
+	local path, lastKey = self:getModuleTreeFromString(stringPath, module)
 
-		for _, pattern in ipairs(Whitelist) do
-			if not (typeof(pattern) == "string") then
-				continue
-			end
-
-			local filteredPattern = "^"
-				.. pattern:gsub("%%", "%%%%"):gsub("%.", "%%."):gsub("%*%*", ".+"):gsub("%*", "[^%.]+")
-				.. "$"
-			if string.match(stringPath, filteredPattern) then
-				allowed = true
-				break
-			end
-		end
-
-		if not allowed then
-			warn(`Blocked unauthorized path: "{stringPath}"`)
-			return
-		end
-	end
-
-	local current = module
-	local path = string.split(stringPath, ".")
-
-	for i = 1, #path - 1 do
-		local key = path[i]
-
-		if typeof(current) ~= "table" or current[key] == nil then
-			warn(`Invalid path segment "{key}" at position {i} in path "{stringPath}"`)
-			return
-		end
-		current = current[key]
-	end
-
-	local lastKey = path[#path]
-	if typeof(current) == "table" then
-		local old = current[lastKey]
+	if typeof(path) == "table" then
+		local old = path[lastKey]
 		local flagFunc = self._referentialIntegrityFlag
+
 		if flagFunc and old then
 			local correctType = typeof(old)
 			local newType = typeof(value)
 
-			if not (correctType == newType) then
+			if not (newType == correctType) then
 				task.spawn(flagFunc, Player)
+				return
+			end
+
+			if correctType == "table" then
+				local function map(t)
+					return Sift.Dictionary.map(t, function(val)
+						return typeof(val)
+					end)
+				end
+
+				local t1 = map(old)
+				local t2 = map(table.clone(path[lastKey]))
+
+				if not (Sift.Dictionary.equals(t1, t2)) then
+					task.spawn(flagFunc, Player)
+					return
+				end
+				path = value
 				return
 			end
 		end
 
-		current[lastKey] = value
+		path[lastKey] = value
 	else
 		warn(`Cannot set value at path "{stringPath}", parent is not a table`)
 	end
@@ -203,8 +241,11 @@ end
 
 	@param Callback (Player) -> () -- A function called with the Player when a type mismatch occurs
 ]=]
-function RelayServer:enforceReferentialIntegrity(Callback)
-	self._referencialIntegrityFlag = Callback
+function RelayServer:enforceReferentialIntegrity(Callback: any?)
+	self._referentialIntegrityFlag = Callback
+		or function(Player: Player)
+			warn(`Blocked type mismatch for {Player.UserId}`)
+		end
 end
 
 --[=[
