@@ -16,7 +16,7 @@ RelayClient.__index = RelayClient
 
 export type RelayClient = typeof(setmetatable(
 	{} :: {
-		_changedSignals: { [string]: Signal.Signal<any> },
+		_changedSignals: { [string]: typeof(Signal) },
 		remotes: Folder,
 		GUID: string,
 	},
