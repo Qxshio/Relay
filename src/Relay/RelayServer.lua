@@ -32,7 +32,7 @@ Constructs a new RelayServer instance
 @param GUID string | Instance -- The unique identifier for the RelayServer instance
 @param Module RelayModule -- The table of functions the client will be communicating with
 @param Whitelist RelayWhitelist? -- The methods that the client is allowed to call
-moon@return RelayServer  
+@return RelayServer  
 ]=]
 function RelayServer.new(
 	GUID: string | Instance,
@@ -189,20 +189,20 @@ function RelayServer:getModuleTreeFromString(stringPath: string, module: {})
 end
 
 --[=[
-	Sets a value in a nested table structure using a dot-separated string path.
+Sets a value in a nested table structure using a dot-separated string path.
 
-	This function navigates through the given `module` table according to `stringPath`,
-	and sets the specified `value` at the targeted key. It optionally checks against
-	a `Whitelist` of allowed path patterns to restrict which paths can be modified.
+This function navigates through the given `module` table according to `stringPath`,
+and sets the specified `value` at the targeted key. It optionally checks against
+a `Whitelist` of allowed path patterns to restrict which paths can be modified.
 	
-	If `RelayServer._referentialIntegrityFlag` is defined, it performs a type check to
-	ensure the new value matches the existing value’s type, and triggers the flag function
-	with the `Player` as argument if the types differ.
+If `RelayServer._referentialIntegrityFlag` is defined, it performs a type check to
+ensure the new value matches the existing value’s type, and triggers the flag function
+with the `Player` as argument if the types differ.
 
-	@param Player Player -- The player attempting to set the value (used for integrity flagging)
-	@param module table -- The root table to navigate and update
-	@param Whitelist table? -- Optional list of allowed path patterns to restrict access
-	@param ... any -- Additional arguments where the first is `stringPath` (dot-separated string path), and second is `value` to set
+@param Player Player -- The player attempting to set the value (used for integrity flagging)
+@param module table -- The root table to navigate and update
+@param Whitelist table? -- Optional list of allowed path patterns to restrict access
+@param ... any -- Additional arguments where the first is `stringPath` (dot-separated string path), and second is `value` to set
 ]=]
 function RelayServer:setValueFromStringIndex(Player: Player, module: {}, Whitelist: {}?, ...)
 	local args = { ... }
