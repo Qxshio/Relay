@@ -1,4 +1,5 @@
 # Relay
+[![Docs](https://img.shields.io/badge/docs-website-green.svg)](https://qxshio.github.io/Relay/)
 ### Last updated 06/07/2025
 Simplifies the usage of server-to-client communication via establishing networking requests in service/module format. (similar to Knit)
 
