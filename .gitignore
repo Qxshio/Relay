@@ -13,3 +13,7 @@
 
 roblox.toml
 sourcemap.json
+
+# Moonwave
+build
+moonwave.toml

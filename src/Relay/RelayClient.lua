@@ -6,11 +6,10 @@ local Signal = require(Packages.Signal)
 local RelayUtil = require(script.Parent.RelayUtil)
 
 --[=[
-	RelayClient simplifies the usage of client-sided communication via establishing networking requests in service/module format.
-    Inspired by leifstout
+RelayClient simplifies the usage of client-sided communication via establishing networking requests in service/module format.
+Inspired by leifstout
 
-    @author Qxshio
-	@class RelayClient  
+@class RelayClient
 ]=]
 local RelayClient = { _changedSignals = {} }
 RelayClient.__index = RelayClient
@@ -25,11 +24,13 @@ export type RelayClient = typeof(setmetatable(
 ))
 
 --[=[
-	Constructs a new RelayClient instance
+Constructs a new RelayClient instance
 
-	@param GUID string | Instance -- The unique identifier for the RelayClient instance
-	@param Module RelayModule -- The table of functions the server will be communicating with
-	@return RelayClient  
+@within RelayClient
+@param GUID string | Instance -- The unique identifier for the RelayClient instance
+@param module RelayModule -- The table of functions the server will be communicating with
+
+@return RelayClient  
 ]=]
 function RelayClient.new(GUID: string | Instance, module: {})
 	assert(
@@ -76,10 +77,11 @@ function RelayClient.new(GUID: string | Instance, module: {})
 end
 
 --[=[
-	Retrieves and/or creates a Signal that is fired whenever the server changes any values on the client
-    @param key string -- The value to listen to, should it be changed by the server
+Retrieves and/or creates a Signal that is fired whenever the server changes any values on the client
+@param key string -- The value to listen to, should it be changed by the server
 
-	@return Signal.Signal<any>
+@within RelayClient
+@return Signal.Signal<any>
 ]=]
 function RelayClient:getServerChangedSignal<T>(key: string): Signal.Signal<T>
 	if not self._changedSignals[key] then
@@ -90,32 +92,35 @@ function RelayClient:getServerChangedSignal<T>(key: string): Signal.Signal<T>
 end
 
 --[=[
-	Communicates to the server using the given method and parameters (...)
-    @param method string -- The method to call
-    @param ... any? -- The parameters to call the method with
+Communicates to the server using the given method and parameters (...)
+@param method string -- The method to call
+@param ... any? -- The parameters to call the method with
 
-	@return ()  
+@within RelayClient
+@return ()  
 ]=]
 function RelayClient:fire(method: string, ...: any?): ()
 	self.remotes.RemoteEvent:FireServer(method, ...)
 end
 
 --[=[
-	Fetches the returned server method function value with the given parameters
-    @param method string The method to call
-    @param ... any? The parameters to call the method with
+Fetches the returned server method function value with the given parameters
+@param method string The method to call
+@param ... any? The parameters to call the method with
 
-	@return ()  
+@within RelayClient
+@return ()  
 ]=]
 function RelayClient:fetchAsync(method: string, ...: any?)
 	return self.remotes.RemoteFunction:InvokeServer(method, ...)
 end
 
 --[=[
-	Sends a request to the server to update a value at a specified path.
+Sends a request to the server to update a value at a specified path.
 
-	@param path string -- The dot-separated path indicating where to set the value on the server
-	@param value any -- The new value to assign at the specified path
+@within RelayClient
+@param path string -- The dot-separated path indicating where to set the value on the server
+@param value any -- The new value to assign at the specified path
 ]=]
 function RelayClient:postDataAsync(path: string, value: any)
 	assert(path and value, `Path or value missing for setServerData`)
@@ -124,9 +129,10 @@ function RelayClient:postDataAsync(path: string, value: any)
 end
 
 --[=[
-	Destoys the RelayClient
+Destoys the RelayClient
 
-	@return ()  
+@within RelayClient
+@return ()  
 ]=]
 function RelayClient:destroy()
 	if self.remotes then
