@@ -16,11 +16,10 @@ type RelayWhitelist = RelayUtil.RelayWhitelist
 type PlayerGroup = RelayUtil.PlayerGroup
 
 --[=[
-	RelayServer simplifies the usage of server-sided communication via establishing networking requests in service/module format.
-    Inspired by leifstout
+RelayServer simplifies the usage of server-sided communication via establishing networking requests in service/module format.
+Inspired by leifstout
 
-    @author Qxshio
-	@class RelayServer  
+@class RelayServer  
 ]=]
 local RelayServer = {}
 RelayServer.__index = RelayServer
@@ -28,12 +27,12 @@ RelayServer.__index = RelayServer
 export type RelayServer = typeof(RelayServer)
 
 --[=[
-	Constructs a new RelayServer instance
+Constructs a new RelayServer instance
 
-	@param GUID string | Instance -- The unique identifier for the RelayServer instance
-	@param Module RelayModule -- The table of functions the client will be communicating with
-	@param Whitelist RelayWhitelist? -- The methods that the client is allowed to call
-	@return RelayServer  
+@param GUID string | Instance -- The unique identifier for the RelayServer instance
+@param Module RelayModule -- The table of functions the client will be communicating with
+@param Whitelist RelayWhitelist? -- The methods that the client is allowed to call
+moon@return RelayServer  
 ]=]
 function RelayServer.new(
 	GUID: string | Instance,
@@ -123,6 +122,16 @@ function RelayServer.new(
 	return self :: RelayServer
 end
 
+--[=[
+Determines if a property change is allowed based on a whitelist of string patterns.
+
+This function checks whether a given `stringPath` matches any of the patterns in the provided whitelist/blacklist.
+Patterns may include wildcards (`*`) to allow for flexible matching, e.g., `"Player.*.Health"`.
+
+@param stringPath string -- The dot-separated string path to check
+@param Whitelist {} -- An array of string patterns to match against
+@return boolean? -- Returns `true` if the path is allowed, `false` otherwise; returns `nil` if the whitelist is not provided
+]=]
 function RelayServer:propertyChangeAllowed(stringPath: string, Whitelist: {})
 	local allowed = false
 	if not Whitelist then
@@ -144,6 +153,19 @@ function RelayServer:propertyChangeAllowed(stringPath: string, Whitelist: {})
 	return Whitelist and allowed
 end
 
+--[=[
+Traverses a nested module/table structure using a dot-separated string path.
+
+Given a string like `"Player.Inventory.Weapons"` and a root module table,
+this function walks the path and returns the final table before the last key, along with the last key as a string.
+
+Useful for dynamically accessing nested module properties based on a string input.
+
+@param stringPath string -- A dot-separated string representing the path to traverse (e.g., `"A.B.C"`)
+@param module {} -- The root module or table to start the traversal from
+@return {}? -- The table at the second-to-last level of the path
+@return string? -- The final key in the path
+]=]
 function RelayServer:getModuleTreeFromString(stringPath: string, module: {})
 	if not (typeof(stringPath) == "string") then
 		warn(`Invalid string path ({stringPath})`)
@@ -248,12 +270,12 @@ function RelayServer:enforceReferentialIntegrity(Callback: any?)
 end
 
 --[=[
-	Communicates to the provided client(s) using the given method and parameters (...)
-    @param players PlayerGroup -- The players to include in the setting
-    @param method string -- The method to call
-    @param ... any? -- The parameters to call the method with
+Communicates to the provided client(s) using the given method and parameters (...)
+@param players PlayerGroup -- The players to include in the setting
+@param method string -- The method to call
+@param ... any? -- The parameters to call the method with
 
-	@return ()  
+@return ()  
 ]=]
 function RelayServer:fire(players: PlayerGroup, method: string, ...: any?): ()
 	if typeof(players) == "Instance" then
@@ -267,23 +289,23 @@ function RelayServer:fire(players: PlayerGroup, method: string, ...: any?): ()
 end
 
 --[=[
-	Communicates to all clients using the given method and parameters (...)
-    @param method string -- The method to call
-    @param ... any? -- The parameters to call the method with
+Communicates to all clients using the given method and parameters (...)
+@param method string -- The method to call
+@param ... any? -- The parameters to call the method with
 
-	@return ()  
+@return ()  
 ]=]
 function RelayServer:fireAll(method: string, ...: any?): ()
 	self._event:FireAllClients(method, ...)
 end
 
 --[=[
-	Communicates to all clients except the players provided using the given method and parameters (...)
-    @param players PlayerGroup -- The players to exclude in the setting
-    @param method string -- The method to call
-    @param ... any? -- The parameters to call the method with
+Communicates to all clients except the players provided using the given method and parameters (...)
+@param players PlayerGroup -- The players to exclude in the setting
+@param method string -- The method to call
+@param ... any? -- The parameters to call the method with
 
-	@return ()  
+@return ()  
 ]=]
 function RelayServer:fireAllExcept(players: PlayerGroup, method: string, ...: any?): ()
 	for _, Player in Players:GetChildren() do
@@ -294,43 +316,44 @@ function RelayServer:fireAllExcept(players: PlayerGroup, method: string, ...: an
 end
 
 --[=[
-	Sets a value for all provided players
-    @param players PlayerGroup -- The players to include in the setting
-    @param index string -- The name of the value that will be set
-    @param value any? -- The value to set index to
+Sets a value for all provided players
+@param players PlayerGroup -- The players to include in the setting
+@param index string -- The name of the value that will be set
+@param value any? -- The value to set index to
 
-	@return ()  
+@return ()  
 ]=]
 function RelayServer:set(players: PlayerGroup, index: string, value: any)
 	self:fire(players, RelayUtil.TAG_SET, index, value)
 end
 
 --[=[
-	Sets a value for all players
-    @param index string -- The name of the value that will be set
-    @param value any? -- The value to set index to
+Sets a value for all players
+@param index string -- The name of the value that will be set
+@param value any? -- The value to set index to
 
-	@return ()  
+@return ()  
 ]=]
 function RelayServer:setAll(index: string, value: any)
 	self:fireAll(RelayUtil.TAG_SET, index, value)
 end
 
 --[=[
-	Sets a value for all players except the provided players
-    @param players PlayerGroup -- The players to exclude from the setting
-    @param index string -- The name of the value that will be set
-    @param value any? -- The value to set index to
+Sets a value for all players except the provided players
+@param players PlayerGroup -- The players to exclude from the setting
+@param index string -- The name of the value that will be set
+@param value any? -- The value to set index to
 
-	@return ()  
+@return ()  
 ]=]
 function RelayServer:setAllExcept(players: PlayerGroup, index: string, value: any)
 	self:fireAllExcept(players, RelayUtil.TAG_SET, index, value)
 end
 
 --[=[
-	Destroys the RelayServer  
-	@return ()  
+Destroys the RelayServer  
+
+@return ()  
 ]=]
 function RelayServer:destroy(): ()
 	if self._instanceConn then
