@@ -111,8 +111,7 @@ function RelayServer.new(
 		if typeof(moduleFunc) == "function" then
 			return moduleFunc(player, ...)
 		elseif typeof(moduleFunc) == "string" then
-			local tree, lastKey = self:getModuleTreeFromString(moduleFunc, self.Module)
-			return tree[lastKey]
+			return RelayUtil:getIndexValueFromString(moduleFunc, self.Module)
 		end
 	end
 
@@ -154,41 +153,6 @@ function RelayServer:propertyChangeAllowed(stringPath: string, Whitelist: {})
 end
 
 --[=[
-Traverses a nested module/table structure using a dot-separated string path.
-
-Given a string like `"Player.Inventory.Weapons"` and a root module table,
-this function walks the path and returns the final table before the last key, along with the last key as a string.
-
-Useful for dynamically accessing nested module properties based on a string input.
-
-@param stringPath string -- A dot-separated string representing the path to traverse (e.g., `"A.B.C"`)
-@param module {} -- The root module or table to start the traversal from
-@return {}? -- The table at the second-to-last level of the path
-@return string? -- The final key in the path
-]=]
-function RelayServer:getModuleTreeFromString(stringPath: string, module: {})
-	if not (typeof(stringPath) == "string") then
-		warn(`Invalid string path ({stringPath})`)
-		return
-	end
-
-	local current = module
-	local path = string.split(stringPath, ".")
-
-	for i = 1, #path - 1 do
-		local key = path[i]
-
-		if typeof(current) ~= "table" or current[key] == nil then
-			warn(`Invalid path segment "{key}" at position {i} in path "{stringPath}"`)
-			return
-		end
-		current = current[key]
-	end
-
-	return current, path[#path]
-end
-
---[=[
 Sets a value in a nested table structure using a dot-separated string path.
 
 This function navigates through the given `module` table according to `stringPath`,
@@ -214,7 +178,7 @@ function RelayServer:setValueFromStringIndex(Player: Player, module: {}, Whiteli
 		return
 	end
 
-	local path, lastKey = self:getModuleTreeFromString(stringPath, module)
+	local path, lastKey = self:getIndexValueFromString(stringPath, module)
 
 	if typeof(path) == "table" then
 		local old = path[lastKey]
@@ -318,36 +282,36 @@ end
 --[=[
 Sets a value for all provided players
 @param players PlayerGroup -- The players to include in the setting
-@param index string -- The name of the value that will be set
+@param stringPath string -- The name of the value that will be set
 @param value any? -- The value to set index to
 
 @return ()  
 ]=]
-function RelayServer:set(players: PlayerGroup, index: string, value: any)
-	self:fire(players, RelayUtil.TAG_SET, index, value)
+function RelayServer:set(players: PlayerGroup, stringPath: string, value: any)
+	self:fire(players, RelayUtil.TAG_SET, stringPath, value)
 end
 
 --[=[
 Sets a value for all players
-@param index string -- The name of the value that will be set
+@param stringPath string -- The name of the value that will be set
 @param value any? -- The value to set index to
 
 @return ()  
 ]=]
-function RelayServer:setAll(index: string, value: any)
-	self:fireAll(RelayUtil.TAG_SET, index, value)
+function RelayServer:setAll(stringPath: string, value: any)
+	self:fireAll(RelayUtil.TAG_SET, stringPath, value)
 end
 
 --[=[
 Sets a value for all players except the provided players
 @param players PlayerGroup -- The players to exclude from the setting
-@param index string -- The name of the value that will be set
+@param stringPath string -- The name of the value that will be set
 @param value any? -- The value to set index to
 
 @return ()  
 ]=]
-function RelayServer:setAllExcept(players: PlayerGroup, index: string, value: any)
-	self:fireAllExcept(players, RelayUtil.TAG_SET, index, value)
+function RelayServer:setAllExcept(players: PlayerGroup, stringPath: string, value: any)
+	self:fireAllExcept(players, RelayUtil.TAG_SET, stringPath, value)
 end
 
 --[=[

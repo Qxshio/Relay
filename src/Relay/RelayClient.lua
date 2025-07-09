@@ -62,10 +62,11 @@ function RelayClient.new(GUID: string | Instance, module: {})
 
 	remoteEvent.OnClientEvent:Connect(function(method: string, key: string, ...: any?)
 		if method == RelayUtil.TAG_SET then
-			local old = module[key]
-			module[key] = ...
+			local value = RelayUtil:getIndexValueFromString(key, module)
+			local old = value
+			value = ...
 			if self._changedSignals[key] then
-				self._changedSignals[key]:Fire(old, module[key])
+				self._changedSignals[key]:Fire(old, value)
 			end
 			return
 		end
@@ -81,7 +82,7 @@ Retrieves and/or creates a Signal that is fired whenever the server changes any 
 @param key string -- The value to listen to, should it be changed by the server
 
 @within RelayClient
-@return Signal.Signal<any>
+@return Signal
 ]=]
 function RelayClient:getServerChangedSignal<T>(key: string): Signal.Signal<T>
 	if not self._changedSignals[key] then
