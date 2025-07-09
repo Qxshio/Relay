@@ -6,11 +6,11 @@
 <title data-rh="true">RelayServer | Relay</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:url" content="https://AuthorName.github.io/Relay/api/RelayServer"><meta data-rh="true" property="og:locale" content="en"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docusaurus_tag" content="default"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docsearch:docusaurus_tag" content="default"><meta data-rh="true" property="og:title" content="RelayServer | Relay"><meta data-rh="true" name="description" content="RelayServer simplifies the usage of server-sided communication via establishing networking requests in service/module format.
 Inspired by leifstout"><meta data-rh="true" property="og:description" content="RelayServer simplifies the usage of server-sided communication via establishing networking requests in service/module format.
 Inspired by leifstout"><link data-rh="true" rel="canonical" href="https://AuthorName.github.io/Relay/api/RelayServer"><link data-rh="true" rel="alternate" href="https://AuthorName.github.io/Relay/api/RelayServer" hreflang="en"><link data-rh="true" rel="alternate" href="https://AuthorName.github.io/Relay/api/RelayServer" hreflang="x-default"><link rel="stylesheet" href="/Relay/assets/css/styles.b9f2c64d.css">
-<script src="/Relay/assets/js/runtime~main.c0ffbea0.js" defer="defer"></script>
-<script src="/Relay/assets/js/main.ee2012c7.js" defer="defer"></script>
+<script src="/Relay/assets/js/runtime~main.68efe9d2.js" defer="defer"></script>
+<script src="/Relay/assets/js/main.3f9415c4.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
-<script>!function(){function t(t){document.documentElement.setAttribute("data-theme",t)}var e=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme")}catch(t){}}();null!==e?t(e):window.matchMedia("(prefers-color-scheme: dark)").matches?t("dark"):(window.matchMedia("(prefers-color-scheme: light)").matches,t("light"))}(),function(){try{const c=new URLSearchParams(window.location.search).entries();for(var[t,e]of c)if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id="__docusaurus"><div role="region" aria-label="Skip to main content"><a class="skipToContent_fXgn" href="#__docusaurus_skipToContent_fallback">Skip to main content</a></div><nav aria-label="Main" class="navbar navbar--fixed-top"><div class="navbar__inner"><div class="navbar__items"><button aria-label="Toggle navigation bar" aria-expanded="false" class="navbar__toggle clean-btn" type="button"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button><a class="navbar__brand" href="/Relay/"><b class="navbar__title text--truncate">Relay</b></a><a aria-current="page" class="navbar__item navbar__link navbar__link--active" href="/Relay/api/">API</a></div><div class="navbar__items navbar__items--right"><a href="https://github.com/Qxshio/Relay" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type="button" disabled="" title="Switch between dark and light mode (currently light mode)" aria-label="Switch between dark and light mode (currently light mode)" aria-live="polite" aria-pressed="false"><svg viewBox="0 0 24 24" width="24" height="24" class="lightToggleIcon_pyhR"><path fill="currentColor" d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" class="darkToggleIcon_wfgR"><path fill="currentColor" d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"></path></svg></button></div><div class="navbarSearchContainer_Bca1"><div class="navbar__search"><span aria-label="expand searchbar" role="button" class="search-icon" tabindex="0"></span><input id="search_input_react" type="search" placeholder="Loading..." aria-label="Search" class="navbar__search-input search-bar" disabled=""></div></div></div></div><div role="presentation" class="navbar-sidebar__backdrop"></div></nav><div id="__docusaurus_skipToContent_fallback" class="main-wrapper mainWrapper_z2l0 docPageContainer_wNNk"><div class="docPage_Dpn1"><div class="docSidebarContainer_o_re"><div class="sidebar_njMd"><nav aria-label="Docs sidebar" class="menu thin-scrollbar menu_SIkG"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/Relay/api/RelayClient">​Relay​Client</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link menu__link--active" aria-current="page" href="/Relay/api/RelayServer">​Relay​Server</a></li></ul></nav></div></div><main class="docMainContainer_HJE1"><div class="container padding-vert--lg"><div class="row"><div class="col docItemCol_MU3C"><div class="docItemContainer_Wv98"><article><div class="member_J0w1 markdown"><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_oUs_"><button type="button" class="clean-btn tocCollapsibleButton_TO0P">On this page</button></div><header><h1 class="docTitle_mZRt" style="text-decoration:none"><span style="display:inline-block">Relay</span><span style="display:inline-block">Server</span></h1><div class="luaClassTags_EipM"></div><div>
+<script>!function(){function t(t){document.documentElement.setAttribute("data-theme",t)}var e=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme")}catch(t){}}();null!==e?t(e):window.matchMedia("(prefers-color-scheme: dark)").matches?t("dark"):(window.matchMedia("(prefers-color-scheme: light)").matches,t("light"))}(),function(){try{const c=new URLSearchParams(window.location.search).entries();for(var[t,e]of c)if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id="__docusaurus"><div role="region" aria-label="Skip to main content"><a class="skipToContent_fXgn" href="#__docusaurus_skipToContent_fallback">Skip to main content</a></div><nav aria-label="Main" class="navbar navbar--fixed-top"><div class="navbar__inner"><div class="navbar__items"><button aria-label="Toggle navigation bar" aria-expanded="false" class="navbar__toggle clean-btn" type="button"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button><a class="navbar__brand" href="/Relay/"><b class="navbar__title text--truncate">Relay</b></a><a aria-current="page" class="navbar__item navbar__link navbar__link--active" href="/Relay/api/">API</a></div><div class="navbar__items navbar__items--right"><a href="https://github.com/Qxshio/Relay" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type="button" disabled="" title="Switch between dark and light mode (currently light mode)" aria-label="Switch between dark and light mode (currently light mode)" aria-live="polite" aria-pressed="false"><svg viewBox="0 0 24 24" width="24" height="24" class="lightToggleIcon_pyhR"><path fill="currentColor" d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" class="darkToggleIcon_wfgR"><path fill="currentColor" d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"></path></svg></button></div><div class="navbarSearchContainer_Bca1"><div class="navbar__search"><span aria-label="expand searchbar" role="button" class="search-icon" tabindex="0"></span><input id="search_input_react" type="search" placeholder="Loading..." aria-label="Search" class="navbar__search-input search-bar" disabled=""></div></div></div></div><div role="presentation" class="navbar-sidebar__backdrop"></div></nav><div id="__docusaurus_skipToContent_fallback" class="main-wrapper mainWrapper_z2l0 docPageContainer_wNNk"><div class="docPage_Dpn1"><div class="docSidebarContainer_o_re"><div class="sidebar_njMd"><nav aria-label="Docs sidebar" class="menu thin-scrollbar menu_SIkG"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/Relay/api/RelayClient">​Relay​Client</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link menu__link--active" aria-current="page" href="/Relay/api/RelayServer">​Relay​Server</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/Relay/api/RelayUtil">​Relay​Util</a></li></ul></nav></div></div><main class="docMainContainer_HJE1"><div class="container padding-vert--lg"><div class="row"><div class="col docItemCol_MU3C"><div class="docItemContainer_Wv98"><article><div class="member_J0w1 markdown"><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_oUs_"><button type="button" class="clean-btn tocCollapsibleButton_TO0P">On this page</button></div><header><h1 class="docTitle_mZRt" style="text-decoration:none"><span style="display:inline-block">Relay</span><span style="display:inline-block">Server</span></h1><div class="luaClassTags_EipM"></div><div>
 <p>
   RelayServer simplifies the usage of server-sided communication via establishing networking requests in service/module format.
   Inspired by leifstout
@@ -23,7 +23,7 @@ Inspired by leifstout"><link data-rh="true" rel="canonical" href="https://Author
 <p>The methods that the client is allowed to call</p>
 </span></span></div><div><code>Blacklist<!-- -->: </code><code class="purple_ieR2">{</code><code class="purple_ieR2">}</code><code class="blue_P4bS">?</code></div></div><code>) → </code><code class="blue_P4bS"><a style="text-decoration:underline;color:inherit" href="/Relay/api/RelayServer">RelayServer</a></code></div><div>
 <p>Constructs a new RelayServer instance</p>
-</div><div class="divider_rE5g"></div><h3 class="anchor anchorWithStickyNavbar_LWe7" id="propertyChangeAllowed"><code style="text-decoration:none">propertyChangeAllowed</code><a href="#propertyChangeAllowed" class="hash-link" aria-label="Direct link to propertyChangeAllowed" title="Direct link to propertyChangeAllowed">​</a></h3><div class="repositoryDetailsContainer_BPdw"><a class="sourceButton_sEho" href="https://github.com/Qxshio/Relay/blob/main/src/Relay/RelayServer.lua#L135"><div class="sourceButtonText_Vh0m">&lt;/&gt;</div></a></div><div class="memberString_GwaU"><code>RelayServer<!-- -->:</code><code class="green_DgR4">propertyChangeAllowed</code><code>(</code><div class="inset_uKQm"><div><code>stringPath<!-- -->: </code><code class="blue_P4bS">string</code><code>,</code><span class="inlineDescription_G7Er">-- <span>
+</div><div class="divider_rE5g"></div><h3 class="anchor anchorWithStickyNavbar_LWe7" id="propertyChangeAllowed"><code style="text-decoration:none">propertyChangeAllowed</code><a href="#propertyChangeAllowed" class="hash-link" aria-label="Direct link to propertyChangeAllowed" title="Direct link to propertyChangeAllowed">​</a></h3><div class="repositoryDetailsContainer_BPdw"><a class="sourceButton_sEho" href="https://github.com/Qxshio/Relay/blob/main/src/Relay/RelayServer.lua#L134"><div class="sourceButtonText_Vh0m">&lt;/&gt;</div></a></div><div class="memberString_GwaU"><code>RelayServer<!-- -->:</code><code class="green_DgR4">propertyChangeAllowed</code><code>(</code><div class="inset_uKQm"><div><code>stringPath<!-- -->: </code><code class="blue_P4bS">string</code><code>,</code><span class="inlineDescription_G7Er">-- <span>
 <p>The dot-separated string path to check</p>
 </span></span></div><div><code>Whitelist<!-- -->: </code><code class="purple_ieR2">{</code><code class="purple_ieR2">}</code><span class="inlineDescription_G7Er">-- <span>
 <p>An array of string patterns to match against</p>
@@ -35,22 +35,7 @@ Inspired by leifstout"><link data-rh="true" rel="canonical" href="https://Author
   This function checks whether a given <code>stringPath</code> matches any of the patterns in the provided whitelist/blacklist.
   Patterns may include wildcards (<code>*</code>) to allow for flexible matching, e.g., <code>"Player.*.Health"</code>.
 </p>
-</div><div class="divider_rE5g"></div><h3 class="anchor anchorWithStickyNavbar_LWe7" id="getModuleTreeFromString"><code style="text-decoration:none">getModuleTreeFromString</code><a href="#getModuleTreeFromString" class="hash-link" aria-label="Direct link to getModuleTreeFromString" title="Direct link to getModuleTreeFromString">​</a></h3><div class="repositoryDetailsContainer_BPdw"><a class="sourceButton_sEho" href="https://github.com/Qxshio/Relay/blob/main/src/Relay/RelayServer.lua#L169"><div class="sourceButtonText_Vh0m">&lt;/&gt;</div></a></div><div class="memberString_GwaU"><code>RelayServer<!-- -->:</code><code class="green_DgR4">getModuleTreeFromString</code><code>(</code><div class="inset_uKQm"><div><code>stringPath<!-- -->: </code><code class="blue_P4bS">string</code><code>,</code><span class="inlineDescription_G7Er">-- <span>
-<p>A dot-separated string representing the path to traverse (e.g., <code>"A.B.C"</code>)</p>
-</span></span></div><div><code>module<!-- -->: </code><code class="purple_ieR2">{</code><code class="purple_ieR2">}</code><span class="inlineDescription_G7Er">-- <span>
-<p>The root module or table to start the traversal from</p>
-</span></span></div></div><code>) → </code><code>(</code><div class="inset_uKQm"><div><code class="purple_ieR2">{</code><code class="purple_ieR2">}</code><code class="blue_P4bS">?</code><code>,</code><span class="inlineDescription_G7Er">-- <span>
-<p>The table at the second-to-last level of the path</p>
-</span></span></div><div><code class="blue_P4bS">string?</code><span class="inlineDescription_G7Er">-- <span>
-<p>The final key in the path</p>
-</span></span></div></div><code>)</code></div><div>
-<p>Traverses a nested module/table structure using a dot-separated string path.</p>
-<p>
-  Given a string like <code>"Player.Inventory.Weapons"</code> and a root module table,
-  this function walks the path and returns the final table before the last key, along with the last key as a string.
-</p>
-<p>Useful for dynamically accessing nested module properties based on a string input.</p>
-</div><div class="divider_rE5g"></div><h3 class="anchor anchorWithStickyNavbar_LWe7" id="setValueFromStringIndex"><code style="text-decoration:none">setValueFromStringIndex</code><a href="#setValueFromStringIndex" class="hash-link" aria-label="Direct link to setValueFromStringIndex" title="Direct link to setValueFromStringIndex">​</a></h3><div class="repositoryDetailsContainer_BPdw"><a class="sourceButton_sEho" href="https://github.com/Qxshio/Relay/blob/main/src/Relay/RelayServer.lua#L207"><div class="sourceButtonText_Vh0m">&lt;/&gt;</div></a></div><div class="memberString_GwaU"><code>RelayServer<!-- -->:</code><code class="green_DgR4">setValueFromStringIndex</code><code>(</code><div class="inset_uKQm"><div><code>Player<!-- -->: </code><code class="blue_P4bS"><a style="text-decoration:underline;color:inherit" href="https://developer.roblox.com/en-us/api-reference/class/Player" target="_blank" rel="noopener noreferrer">Player<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound" style="color:gray;vertical-align:middle;margin-left:2px"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></code><code>,</code><span class="inlineDescription_G7Er">-- <span>
+</div><div class="divider_rE5g"></div><h3 class="anchor anchorWithStickyNavbar_LWe7" id="setValueFromStringIndex"><code style="text-decoration:none">setValueFromStringIndex</code><a href="#setValueFromStringIndex" class="hash-link" aria-label="Direct link to setValueFromStringIndex" title="Direct link to setValueFromStringIndex">​</a></h3><div class="repositoryDetailsContainer_BPdw"><a class="sourceButton_sEho" href="https://github.com/Qxshio/Relay/blob/main/src/Relay/RelayServer.lua#L171"><div class="sourceButtonText_Vh0m">&lt;/&gt;</div></a></div><div class="memberString_GwaU"><code>RelayServer<!-- -->:</code><code class="green_DgR4">setValueFromStringIndex</code><code>(</code><div class="inset_uKQm"><div><code>Player<!-- -->: </code><code class="blue_P4bS"><a style="text-decoration:underline;color:inherit" href="https://developer.roblox.com/en-us/api-reference/class/Player" target="_blank" rel="noopener noreferrer">Player<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound" style="color:gray;vertical-align:middle;margin-left:2px"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></code><code>,</code><span class="inlineDescription_G7Er">-- <span>
 <p>The player attempting to set the value (used for integrity flagging)</p>
 </span></span></div><div><code>module<!-- -->: </code><code class="blue_P4bS">table</code><code>,</code><span class="inlineDescription_G7Er">-- <span>
 <p>The root table to navigate and update</p>
@@ -70,7 +55,7 @@ Inspired by leifstout"><link data-rh="true" rel="canonical" href="https://Author
   ensure the new value matches the existing value’s type, and triggers the flag function
   with the <code>Player</code> as argument if the types differ.
 </p>
-</div><div class="divider_rE5g"></div><h3 class="anchor anchorWithStickyNavbar_LWe7" id="enforceReferentialIntegrity"><code style="text-decoration:none">enforceReferentialIntegrity</code><a href="#enforceReferentialIntegrity" class="hash-link" aria-label="Direct link to enforceReferentialIntegrity" title="Direct link to enforceReferentialIntegrity">​</a></h3><div class="repositoryDetailsContainer_BPdw"><a class="sourceButton_sEho" href="https://github.com/Qxshio/Relay/blob/main/src/Relay/RelayServer.lua#L265"><div class="sourceButtonText_Vh0m">&lt;/&gt;</div></a></div><div class="memberString_GwaU"><code>RelayServer<!-- -->:</code><code class="green_DgR4">enforceReferentialIntegrity</code><code>(</code><div class="inset_uKQm"><div><code>Callback<!-- -->: </code><code class="purple_ieR2">(</code><code class="blue_P4bS"><a style="text-decoration:underline;color:inherit" href="https://developer.roblox.com/en-us/api-reference/class/Player" target="_blank" rel="noopener noreferrer">Player<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound" style="color:gray;vertical-align:middle;margin-left:2px"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></code><code class="purple_ieR2">)</code><code class="purple_ieR2"> → </code><code class="purple_ieR2">(</code><code class="purple_ieR2">)</code><span class="inlineDescription_G7Er">-- <span>
+</div><div class="divider_rE5g"></div><h3 class="anchor anchorWithStickyNavbar_LWe7" id="enforceReferentialIntegrity"><code style="text-decoration:none">enforceReferentialIntegrity</code><a href="#enforceReferentialIntegrity" class="hash-link" aria-label="Direct link to enforceReferentialIntegrity" title="Direct link to enforceReferentialIntegrity">​</a></h3><div class="repositoryDetailsContainer_BPdw"><a class="sourceButton_sEho" href="https://github.com/Qxshio/Relay/blob/main/src/Relay/RelayServer.lua#L229"><div class="sourceButtonText_Vh0m">&lt;/&gt;</div></a></div><div class="memberString_GwaU"><code>RelayServer<!-- -->:</code><code class="green_DgR4">enforceReferentialIntegrity</code><code>(</code><div class="inset_uKQm"><div><code>Callback<!-- -->: </code><code class="purple_ieR2">(</code><code class="blue_P4bS"><a style="text-decoration:underline;color:inherit" href="https://developer.roblox.com/en-us/api-reference/class/Player" target="_blank" rel="noopener noreferrer">Player<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound" style="color:gray;vertical-align:middle;margin-left:2px"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></code><code class="purple_ieR2">)</code><code class="purple_ieR2"> → </code><code class="purple_ieR2">(</code><code class="purple_ieR2">)</code><span class="inlineDescription_G7Er">-- <span>
 <p>A function called with the Player when a type mismatch occurs</p>
 </span></span></div></div><code>) → </code><code>(</code><code>)</code></div><div>
 <p>Sets a callback function to enforce referential integrity during value assignment.</p>
@@ -78,7 +63,7 @@ Inspired by leifstout"><link data-rh="true" rel="canonical" href="https://Author
   When a value is set via <code>setValueFromStringIndex</code>, this callback is invoked if the
   new value's type does not match the existing value's type at the target path.
 </p>
-</div><div class="divider_rE5g"></div><h3 class="anchor anchorWithStickyNavbar_LWe7" id="fire"><code style="text-decoration:none">fire</code><a href="#fire" class="hash-link" aria-label="Direct link to fire" title="Direct link to fire">​</a></h3><div class="repositoryDetailsContainer_BPdw"><a class="sourceButton_sEho" href="https://github.com/Qxshio/Relay/blob/main/src/Relay/RelayServer.lua#L280"><div class="sourceButtonText_Vh0m">&lt;/&gt;</div></a></div><div class="memberString_GwaU"><code>RelayServer<!-- -->:</code><code class="green_DgR4">fire</code><code>(</code><div class="inset_uKQm"><div><code>players<!-- -->: </code><code class="blue_P4bS">PlayerGroup</code><code>,</code><span class="inlineDescription_G7Er">-- <span>
+</div><div class="divider_rE5g"></div><h3 class="anchor anchorWithStickyNavbar_LWe7" id="fire"><code style="text-decoration:none">fire</code><a href="#fire" class="hash-link" aria-label="Direct link to fire" title="Direct link to fire">​</a></h3><div class="repositoryDetailsContainer_BPdw"><a class="sourceButton_sEho" href="https://github.com/Qxshio/Relay/blob/main/src/Relay/RelayServer.lua#L244"><div class="sourceButtonText_Vh0m">&lt;/&gt;</div></a></div><div class="memberString_GwaU"><code>RelayServer<!-- -->:</code><code class="green_DgR4">fire</code><code>(</code><div class="inset_uKQm"><div><code>players<!-- -->: </code><code class="blue_P4bS">PlayerGroup</code><code>,</code><span class="inlineDescription_G7Er">-- <span>
 <p>The players to include in the setting</p>
 </span></span></div><div><code>method<!-- -->: </code><code class="blue_P4bS">string</code><code>,</code><span class="inlineDescription_G7Er">-- <span>
 <p>The method to call</p>
@@ -86,13 +71,13 @@ Inspired by leifstout"><link data-rh="true" rel="canonical" href="https://Author
 <p>The parameters to call the method with</p>
 </span></span></div></div><code>) → </code><code class="purple_ieR2">(</code><code class="purple_ieR2">)</code></div><div>
 <p>Communicates to the provided client(s) using the given method and parameters (...)</p>
-</div><div class="divider_rE5g"></div><h3 class="anchor anchorWithStickyNavbar_LWe7" id="fireAll"><code style="text-decoration:none">fireAll</code><a href="#fireAll" class="hash-link" aria-label="Direct link to fireAll" title="Direct link to fireAll">​</a></h3><div class="repositoryDetailsContainer_BPdw"><a class="sourceButton_sEho" href="https://github.com/Qxshio/Relay/blob/main/src/Relay/RelayServer.lua#L298"><div class="sourceButtonText_Vh0m">&lt;/&gt;</div></a></div><div class="memberString_GwaU"><code>RelayServer<!-- -->:</code><code class="green_DgR4">fireAll</code><code>(</code><div class="inset_uKQm"><div><code>method<!-- -->: </code><code class="blue_P4bS">string</code><code>,</code><span class="inlineDescription_G7Er">-- <span>
+</div><div class="divider_rE5g"></div><h3 class="anchor anchorWithStickyNavbar_LWe7" id="fireAll"><code style="text-decoration:none">fireAll</code><a href="#fireAll" class="hash-link" aria-label="Direct link to fireAll" title="Direct link to fireAll">​</a></h3><div class="repositoryDetailsContainer_BPdw"><a class="sourceButton_sEho" href="https://github.com/Qxshio/Relay/blob/main/src/Relay/RelayServer.lua#L262"><div class="sourceButtonText_Vh0m">&lt;/&gt;</div></a></div><div class="memberString_GwaU"><code>RelayServer<!-- -->:</code><code class="green_DgR4">fireAll</code><code>(</code><div class="inset_uKQm"><div><code>method<!-- -->: </code><code class="blue_P4bS">string</code><code>,</code><span class="inlineDescription_G7Er">-- <span>
 <p>The method to call</p>
 </span></span></div><div><code>...<!-- -->: </code><code class="blue_P4bS">any?</code><span class="inlineDescription_G7Er">-- <span>
 <p>The parameters to call the method with</p>
 </span></span></div></div><code>) → </code><code class="purple_ieR2">(</code><code class="purple_ieR2">)</code></div><div>
 <p>Communicates to all clients using the given method and parameters (...)</p>
-</div><div class="divider_rE5g"></div><h3 class="anchor anchorWithStickyNavbar_LWe7" id="fireAllExcept"><code style="text-decoration:none">fireAllExcept</code><a href="#fireAllExcept" class="hash-link" aria-label="Direct link to fireAllExcept" title="Direct link to fireAllExcept">​</a></h3><div class="repositoryDetailsContainer_BPdw"><a class="sourceButton_sEho" href="https://github.com/Qxshio/Relay/blob/main/src/Relay/RelayServer.lua#L310"><div class="sourceButtonText_Vh0m">&lt;/&gt;</div></a></div><div class="memberString_GwaU"><code>RelayServer<!-- -->:</code><code class="green_DgR4">fireAllExcept</code><code>(</code><div class="inset_uKQm"><div><code>players<!-- -->: </code><code class="blue_P4bS">PlayerGroup</code><code>,</code><span class="inlineDescription_G7Er">-- <span>
+</div><div class="divider_rE5g"></div><h3 class="anchor anchorWithStickyNavbar_LWe7" id="fireAllExcept"><code style="text-decoration:none">fireAllExcept</code><a href="#fireAllExcept" class="hash-link" aria-label="Direct link to fireAllExcept" title="Direct link to fireAllExcept">​</a></h3><div class="repositoryDetailsContainer_BPdw"><a class="sourceButton_sEho" href="https://github.com/Qxshio/Relay/blob/main/src/Relay/RelayServer.lua#L274"><div class="sourceButtonText_Vh0m">&lt;/&gt;</div></a></div><div class="memberString_GwaU"><code>RelayServer<!-- -->:</code><code class="green_DgR4">fireAllExcept</code><code>(</code><div class="inset_uKQm"><div><code>players<!-- -->: </code><code class="blue_P4bS">PlayerGroup</code><code>,</code><span class="inlineDescription_G7Er">-- <span>
 <p>The players to exclude in the setting</p>
 </span></span></div><div><code>method<!-- -->: </code><code class="blue_P4bS">string</code><code>,</code><span class="inlineDescription_G7Er">-- <span>
 <p>The method to call</p>
@@ -100,29 +85,29 @@ Inspired by leifstout"><link data-rh="true" rel="canonical" href="https://Author
 <p>The parameters to call the method with</p>
 </span></span></div></div><code>) → </code><code class="purple_ieR2">(</code><code class="purple_ieR2">)</code></div><div>
 <p>Communicates to all clients except the players provided using the given method and parameters (...)</p>
-</div><div class="divider_rE5g"></div><h3 class="anchor anchorWithStickyNavbar_LWe7" id="set"><code style="text-decoration:none">set</code><a href="#set" class="hash-link" aria-label="Direct link to set" title="Direct link to set">​</a></h3><div class="repositoryDetailsContainer_BPdw"><a class="sourceButton_sEho" href="https://github.com/Qxshio/Relay/blob/main/src/Relay/RelayServer.lua#L326"><div class="sourceButtonText_Vh0m">&lt;/&gt;</div></a></div><div class="memberString_GwaU"><code>RelayServer<!-- -->:</code><code class="green_DgR4">set</code><code>(</code><div class="inset_uKQm"><div><code>players<!-- -->: </code><code class="blue_P4bS">PlayerGroup</code><code>,</code><span class="inlineDescription_G7Er">-- <span>
+</div><div class="divider_rE5g"></div><h3 class="anchor anchorWithStickyNavbar_LWe7" id="set"><code style="text-decoration:none">set</code><a href="#set" class="hash-link" aria-label="Direct link to set" title="Direct link to set">​</a></h3><div class="repositoryDetailsContainer_BPdw"><a class="sourceButton_sEho" href="https://github.com/Qxshio/Relay/blob/main/src/Relay/RelayServer.lua#L290"><div class="sourceButtonText_Vh0m">&lt;/&gt;</div></a></div><div class="memberString_GwaU"><code>RelayServer<!-- -->:</code><code class="green_DgR4">set</code><code>(</code><div class="inset_uKQm"><div><code>players<!-- -->: </code><code class="blue_P4bS">PlayerGroup</code><code>,</code><span class="inlineDescription_G7Er">-- <span>
 <p>The players to include in the setting</p>
-</span></span></div><div><code>index<!-- -->: </code><code class="blue_P4bS">string</code><code>,</code><span class="inlineDescription_G7Er">-- <span>
+</span></span></div><div><code>stringPath<!-- -->: </code><code class="blue_P4bS">string</code><code>,</code><span class="inlineDescription_G7Er">-- <span>
 <p>The name of the value that will be set</p>
 </span></span></div><div><code>value<!-- -->: </code><code class="blue_P4bS">any?</code><span class="inlineDescription_G7Er">-- <span>
 <p>The value to set index to</p>
 </span></span></div></div><code>) → </code><code class="purple_ieR2">(</code><code class="purple_ieR2">)</code></div><div>
 <p>Sets a value for all provided players</p>
-</div><div class="divider_rE5g"></div><h3 class="anchor anchorWithStickyNavbar_LWe7" id="setAll"><code style="text-decoration:none">setAll</code><a href="#setAll" class="hash-link" aria-label="Direct link to setAll" title="Direct link to setAll">​</a></h3><div class="repositoryDetailsContainer_BPdw"><a class="sourceButton_sEho" href="https://github.com/Qxshio/Relay/blob/main/src/Relay/RelayServer.lua#L337"><div class="sourceButtonText_Vh0m">&lt;/&gt;</div></a></div><div class="memberString_GwaU"><code>RelayServer<!-- -->:</code><code class="green_DgR4">setAll</code><code>(</code><div class="inset_uKQm"><div><code>index<!-- -->: </code><code class="blue_P4bS">string</code><code>,</code><span class="inlineDescription_G7Er">-- <span>
+</div><div class="divider_rE5g"></div><h3 class="anchor anchorWithStickyNavbar_LWe7" id="setAll"><code style="text-decoration:none">setAll</code><a href="#setAll" class="hash-link" aria-label="Direct link to setAll" title="Direct link to setAll">​</a></h3><div class="repositoryDetailsContainer_BPdw"><a class="sourceButton_sEho" href="https://github.com/Qxshio/Relay/blob/main/src/Relay/RelayServer.lua#L301"><div class="sourceButtonText_Vh0m">&lt;/&gt;</div></a></div><div class="memberString_GwaU"><code>RelayServer<!-- -->:</code><code class="green_DgR4">setAll</code><code>(</code><div class="inset_uKQm"><div><code>stringPath<!-- -->: </code><code class="blue_P4bS">string</code><code>,</code><span class="inlineDescription_G7Er">-- <span>
 <p>The name of the value that will be set</p>
 </span></span></div><div><code>value<!-- -->: </code><code class="blue_P4bS">any?</code><span class="inlineDescription_G7Er">-- <span>
 <p>The value to set index to</p>
 </span></span></div></div><code>) → </code><code class="purple_ieR2">(</code><code class="purple_ieR2">)</code></div><div>
 <p>Sets a value for all players</p>
-</div><div class="divider_rE5g"></div><h3 class="anchor anchorWithStickyNavbar_LWe7" id="setAllExcept"><code style="text-decoration:none">setAllExcept</code><a href="#setAllExcept" class="hash-link" aria-label="Direct link to setAllExcept" title="Direct link to setAllExcept">​</a></h3><div class="repositoryDetailsContainer_BPdw"><a class="sourceButton_sEho" href="https://github.com/Qxshio/Relay/blob/main/src/Relay/RelayServer.lua#L349"><div class="sourceButtonText_Vh0m">&lt;/&gt;</div></a></div><div class="memberString_GwaU"><code>RelayServer<!-- -->:</code><code class="green_DgR4">setAllExcept</code><code>(</code><div class="inset_uKQm"><div><code>players<!-- -->: </code><code class="blue_P4bS">PlayerGroup</code><code>,</code><span class="inlineDescription_G7Er">-- <span>
+</div><div class="divider_rE5g"></div><h3 class="anchor anchorWithStickyNavbar_LWe7" id="setAllExcept"><code style="text-decoration:none">setAllExcept</code><a href="#setAllExcept" class="hash-link" aria-label="Direct link to setAllExcept" title="Direct link to setAllExcept">​</a></h3><div class="repositoryDetailsContainer_BPdw"><a class="sourceButton_sEho" href="https://github.com/Qxshio/Relay/blob/main/src/Relay/RelayServer.lua#L313"><div class="sourceButtonText_Vh0m">&lt;/&gt;</div></a></div><div class="memberString_GwaU"><code>RelayServer<!-- -->:</code><code class="green_DgR4">setAllExcept</code><code>(</code><div class="inset_uKQm"><div><code>players<!-- -->: </code><code class="blue_P4bS">PlayerGroup</code><code>,</code><span class="inlineDescription_G7Er">-- <span>
 <p>The players to exclude from the setting</p>
-</span></span></div><div><code>index<!-- -->: </code><code class="blue_P4bS">string</code><code>,</code><span class="inlineDescription_G7Er">-- <span>
+</span></span></div><div><code>stringPath<!-- -->: </code><code class="blue_P4bS">string</code><code>,</code><span class="inlineDescription_G7Er">-- <span>
 <p>The name of the value that will be set</p>
 </span></span></div><div><code>value<!-- -->: </code><code class="blue_P4bS">any?</code><span class="inlineDescription_G7Er">-- <span>
 <p>The value to set index to</p>
 </span></span></div></div><code>) → </code><code class="purple_ieR2">(</code><code class="purple_ieR2">)</code></div><div>
 <p>Sets a value for all players except the provided players</p>
-</div><div class="divider_rE5g"></div><h3 class="anchor anchorWithStickyNavbar_LWe7" id="destroy"><code style="text-decoration:none">destroy</code><a href="#destroy" class="hash-link" aria-label="Direct link to destroy" title="Direct link to destroy">​</a></h3><div class="repositoryDetailsContainer_BPdw"><a class="sourceButton_sEho" href="https://github.com/Qxshio/Relay/blob/main/src/Relay/RelayServer.lua#L358"><div class="sourceButtonText_Vh0m">&lt;/&gt;</div></a></div><div class="memberString_GwaU"><code>RelayServer<!-- -->:</code><code class="green_DgR4">destroy</code><code>(</code><code>) → </code><code class="purple_ieR2">(</code><code class="purple_ieR2">)</code></div><div>
+</div><div class="divider_rE5g"></div><h3 class="anchor anchorWithStickyNavbar_LWe7" id="destroy"><code style="text-decoration:none">destroy</code><a href="#destroy" class="hash-link" aria-label="Direct link to destroy" title="Direct link to destroy">​</a></h3><div class="repositoryDetailsContainer_BPdw"><a class="sourceButton_sEho" href="https://github.com/Qxshio/Relay/blob/main/src/Relay/RelayServer.lua#L322"><div class="sourceButtonText_Vh0m">&lt;/&gt;</div></a></div><div class="memberString_GwaU"><code>RelayServer<!-- -->:</code><code class="green_DgR4">destroy</code><code>(</code><code>) → </code><code class="purple_ieR2">(</code><code class="purple_ieR2">)</code></div><div>
 <p>Destroys the RelayServer</p>
 </div></div></article></div><details><summary>Show raw api</summary><pre style="max-width:100%;white-space:pre-wrap">{
     &quot;functions&quot;: [
@@ -186,38 +171,7 @@ Inspired by leifstout"><link data-rh="true" rel="canonical" href="https://Author
             ],
             &quot;function_type&quot;: &quot;method&quot;,
             &quot;source&quot;: {
-                &quot;line&quot;: 135,
-                &quot;path&quot;: &quot;src/Relay/RelayServer.lua&quot;
-            }
-        },
-        {
-            &quot;name&quot;: &quot;getModuleTreeFromString&quot;,
-            &quot;desc&quot;: &quot;Traverses a nested module/table structure using a dot-separated string path.\n\nGiven a string like `\&quot;Player.Inventory.Weapons\&quot;` and a root module table,\nthis function walks the path and returns the final table before the last key, along with the last key as a string.\n\nUseful for dynamically accessing nested module properties based on a string input.&quot;,
-            &quot;params&quot;: [
-                {
-                    &quot;name&quot;: &quot;stringPath&quot;,
-                    &quot;desc&quot;: &quot;A dot-separated string representing the path to traverse (e.g., `\&quot;A.B.C\&quot;`)&quot;,
-                    &quot;lua_type&quot;: &quot;string&quot;
-                },
-                {
-                    &quot;name&quot;: &quot;module&quot;,
-                    &quot;desc&quot;: &quot;The root module or table to start the traversal from&quot;,
-                    &quot;lua_type&quot;: &quot;{}&quot;
-                }
-            ],
-            &quot;returns&quot;: [
-                {
-                    &quot;desc&quot;: &quot;The table at the second-to-last level of the path&quot;,
-                    &quot;lua_type&quot;: &quot;{}?&quot;
-                },
-                {
-                    &quot;desc&quot;: &quot;The final key in the path&quot;,
-                    &quot;lua_type&quot;: &quot;string?&quot;
-                }
-            ],
-            &quot;function_type&quot;: &quot;method&quot;,
-            &quot;source&quot;: {
-                &quot;line&quot;: 169,
+                &quot;line&quot;: 134,
                 &quot;path&quot;: &quot;src/Relay/RelayServer.lua&quot;
             }
         },
@@ -249,7 +203,7 @@ Inspired by leifstout"><link data-rh="true" rel="canonical" href="https://Author
             &quot;returns&quot;: [],
             &quot;function_type&quot;: &quot;method&quot;,
             &quot;source&quot;: {
-                &quot;line&quot;: 207,
+                &quot;line&quot;: 171,
                 &quot;path&quot;: &quot;src/Relay/RelayServer.lua&quot;
             }
         },
@@ -266,7 +220,7 @@ Inspired by leifstout"><link data-rh="true" rel="canonical" href="https://Author
             &quot;returns&quot;: [],
             &quot;function_type&quot;: &quot;method&quot;,
             &quot;source&quot;: {
-                &quot;line&quot;: 265,
+                &quot;line&quot;: 229,
                 &quot;path&quot;: &quot;src/Relay/RelayServer.lua&quot;
             }
         },
@@ -298,7 +252,7 @@ Inspired by leifstout"><link data-rh="true" rel="canonical" href="https://Author
             ],
             &quot;function_type&quot;: &quot;method&quot;,
             &quot;source&quot;: {
-                &quot;line&quot;: 280,
+                &quot;line&quot;: 244,
                 &quot;path&quot;: &quot;src/Relay/RelayServer.lua&quot;
             }
         },
@@ -325,7 +279,7 @@ Inspired by leifstout"><link data-rh="true" rel="canonical" href="https://Author
             ],
             &quot;function_type&quot;: &quot;method&quot;,
             &quot;source&quot;: {
-                &quot;line&quot;: 298,
+                &quot;line&quot;: 262,
                 &quot;path&quot;: &quot;src/Relay/RelayServer.lua&quot;
             }
         },
@@ -357,7 +311,7 @@ Inspired by leifstout"><link data-rh="true" rel="canonical" href="https://Author
             ],
             &quot;function_type&quot;: &quot;method&quot;,
             &quot;source&quot;: {
-                &quot;line&quot;: 310,
+                &quot;line&quot;: 274,
                 &quot;path&quot;: &quot;src/Relay/RelayServer.lua&quot;
             }
         },
@@ -371,7 +325,7 @@ Inspired by leifstout"><link data-rh="true" rel="canonical" href="https://Author
                     &quot;lua_type&quot;: &quot;PlayerGroup&quot;
                 },
                 {
-                    &quot;name&quot;: &quot;index&quot;,
+                    &quot;name&quot;: &quot;stringPath&quot;,
                     &quot;desc&quot;: &quot;The name of the value that will be set&quot;,
                     &quot;lua_type&quot;: &quot;string&quot;
                 },
@@ -389,7 +343,7 @@ Inspired by leifstout"><link data-rh="true" rel="canonical" href="https://Author
             ],
             &quot;function_type&quot;: &quot;method&quot;,
             &quot;source&quot;: {
-                &quot;line&quot;: 326,
+                &quot;line&quot;: 290,
                 &quot;path&quot;: &quot;src/Relay/RelayServer.lua&quot;
             }
         },
@@ -398,7 +352,7 @@ Inspired by leifstout"><link data-rh="true" rel="canonical" href="https://Author
             &quot;desc&quot;: &quot;Sets a value for all players&quot;,
             &quot;params&quot;: [
                 {
-                    &quot;name&quot;: &quot;index&quot;,
+                    &quot;name&quot;: &quot;stringPath&quot;,
                     &quot;desc&quot;: &quot;The name of the value that will be set&quot;,
                     &quot;lua_type&quot;: &quot;string&quot;
                 },
@@ -416,7 +370,7 @@ Inspired by leifstout"><link data-rh="true" rel="canonical" href="https://Author
             ],
             &quot;function_type&quot;: &quot;method&quot;,
             &quot;source&quot;: {
-                &quot;line&quot;: 337,
+                &quot;line&quot;: 301,
                 &quot;path&quot;: &quot;src/Relay/RelayServer.lua&quot;
             }
         },
@@ -430,7 +384,7 @@ Inspired by leifstout"><link data-rh="true" rel="canonical" href="https://Author
                     &quot;lua_type&quot;: &quot;PlayerGroup&quot;
                 },
                 {
-                    &quot;name&quot;: &quot;index&quot;,
+                    &quot;name&quot;: &quot;stringPath&quot;,
                     &quot;desc&quot;: &quot;The name of the value that will be set&quot;,
                     &quot;lua_type&quot;: &quot;string&quot;
                 },
@@ -448,7 +402,7 @@ Inspired by leifstout"><link data-rh="true" rel="canonical" href="https://Author
             ],
             &quot;function_type&quot;: &quot;method&quot;,
             &quot;source&quot;: {
-                &quot;line&quot;: 349,
+                &quot;line&quot;: 313,
                 &quot;path&quot;: &quot;src/Relay/RelayServer.lua&quot;
             }
         },
@@ -464,7 +418,7 @@ Inspired by leifstout"><link data-rh="true" rel="canonical" href="https://Author
             ],
             &quot;function_type&quot;: &quot;method&quot;,
             &quot;source&quot;: {
-                &quot;line&quot;: 358,
+                &quot;line&quot;: 322,
                 &quot;path&quot;: &quot;src/Relay/RelayServer.lua&quot;
             }
         }
@@ -477,6 +431,6 @@ Inspired by leifstout"><link data-rh="true" rel="canonical" href="https://Author
         &quot;line&quot;: 24,
         &quot;path&quot;: &quot;src/Relay/RelayServer.lua&quot;
     }
-}</pre></details></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#functions" class="table-of-contents__link toc-highlight">Functions</a><ul><li><a href="#destroy" class="table-of-contents__link toc-highlight">:destroy</a></li><li><a href="#enforceReferentialIntegrity" class="table-of-contents__link toc-highlight">:enforceReferentialIntegrity</a></li><li><a href="#fire" class="table-of-contents__link toc-highlight">:fire</a></li><li><a href="#fireAll" class="table-of-contents__link toc-highlight">:fireAll</a></li><li><a href="#fireAllExcept" class="table-of-contents__link toc-highlight">:fireAllExcept</a></li><li><a href="#getModuleTreeFromString" class="table-of-contents__link toc-highlight">:getModuleTreeFromString</a></li><li><a href="#propertyChangeAllowed" class="table-of-contents__link toc-highlight">:propertyChangeAllowed</a></li><li><a href="#set" class="table-of-contents__link toc-highlight">:set</a></li><li><a href="#setAll" class="table-of-contents__link toc-highlight">:setAll</a></li><li><a href="#setAllExcept" class="table-of-contents__link toc-highlight">:setAllExcept</a></li><li><a href="#setValueFromStringIndex" class="table-of-contents__link toc-highlight">:setValueFromStringIndex</a></li><li><a href="#new" class="table-of-contents__link toc-highlight">.new</a></li></ul></li></ul></div></div></div></div></main></div></div><footer class="footer footer--dark"><div class="container container-fluid"><div class="footer__bottom text--center"><div class="footer__copyright">Copyright © 2025 Relay by Qxshio</div></div></div></footer></div>
+}</pre></details></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#functions" class="table-of-contents__link toc-highlight">Functions</a><ul><li><a href="#destroy" class="table-of-contents__link toc-highlight">:destroy</a></li><li><a href="#enforceReferentialIntegrity" class="table-of-contents__link toc-highlight">:enforceReferentialIntegrity</a></li><li><a href="#fire" class="table-of-contents__link toc-highlight">:fire</a></li><li><a href="#fireAll" class="table-of-contents__link toc-highlight">:fireAll</a></li><li><a href="#fireAllExcept" class="table-of-contents__link toc-highlight">:fireAllExcept</a></li><li><a href="#propertyChangeAllowed" class="table-of-contents__link toc-highlight">:propertyChangeAllowed</a></li><li><a href="#set" class="table-of-contents__link toc-highlight">:set</a></li><li><a href="#setAll" class="table-of-contents__link toc-highlight">:setAll</a></li><li><a href="#setAllExcept" class="table-of-contents__link toc-highlight">:setAllExcept</a></li><li><a href="#setValueFromStringIndex" class="table-of-contents__link toc-highlight">:setValueFromStringIndex</a></li><li><a href="#new" class="table-of-contents__link toc-highlight">.new</a></li></ul></li></ul></div></div></div></div></main></div></div><footer class="footer footer--dark"><div class="container container-fluid"><div class="footer__bottom text--center"><div class="footer__copyright">Copyright © 2025 Relay by Qxshio</div></div></div></footer></div>
 </body>
 </html>
