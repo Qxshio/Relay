@@ -132,13 +132,13 @@ Patterns may include wildcards (`*`) to allow for flexible matching, e.g., `"Pla
 @param list {any} -- The list to check (blacklist/whitelist etc)
 @return boolean? -- Returns `true` if the path is allowed, `false` otherwise; returns `nil` if the whitelist is not provided
 ]=]
-function RelayServer:propertyChangeAllowed(stringPath: string, List: { any })
+function RelayServer:propertyChangeAllowed(stringPath: string, list: { any })
 	local allowed = false
-	if not List then
+	if not list then
 		return
 	end
 
-	for _, pattern in ipairs(List) do
+	for _, pattern in ipairs(list) do
 		if not (typeof(pattern) == "string") then
 			continue
 		end
@@ -150,7 +150,7 @@ function RelayServer:propertyChangeAllowed(stringPath: string, List: { any })
 			break
 		end
 	end
-	return List and allowed
+	return list and allowed
 end
 
 --[=[
