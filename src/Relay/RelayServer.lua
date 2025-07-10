@@ -52,8 +52,8 @@ function RelayServer.new(
 		return self
 	end
 
-	self.Whitelist = Whitelist
-	self.Blacklist = Blacklist
+	self.Whitelist = Whitelist or {}
+	self.Blacklist = Blacklist or {}
 	self.Module = Module
 
 	local remotes = Instance.new("Folder")
@@ -82,7 +82,10 @@ function RelayServer.new(
 	local function eventCallback(player: Player, method: string, ...: any?): any?
 		assert(self.Module, "No module provided")
 		if method == RelayUtil.TAG_SET then
-			self:setValueFromStringIndex(player, self.Module, self.Whitelist, ...)
+			local args = { ... }
+			local stringPath = args[1]
+			local value = args[2]
+			self:setValueFromStringIndex(player, stringPath, value)
 			return
 		end
 
@@ -100,8 +103,7 @@ function RelayServer.new(
 			not (
 				typeof(moduleFunc) == "function"
 					and (table.find(self.Whitelist, moduleFunc) or (not table.find(self.Blacklist, moduleFunc)))
-				or self:propertyChangeAllowed(moduleFunc, self.Whitelist)
-				or (not self:propertyChangeAllowed(moduleFunc, self.Blacklist))
+				or self:propertyChangeAllowed(moduleFunc)
 			)
 		then -- temporarily messy, will be changed later
 			warn(`Requested method {method} is not whitelisted on the server`)
@@ -132,9 +134,11 @@ Patterns may include wildcards (`*`) to allow for flexible matching, e.g., `"Pla
 @param list {any} -- The list to check (blacklist/whitelist etc)
 @return boolean? -- Returns `true` if the path is allowed, `false` otherwise; returns `nil` if the whitelist is not provided
 ]=]
-function RelayServer:propertyChangeAllowed(stringPath: string, list: { any })
+function RelayServer:propertyChangeAllowed(stringPath: string)
 	local allowed = false
-	if not list then
+	local list = Sift.Dictionary.merge(self.Whitelist, self.Blacklist)
+
+	if not (list or typeof(stringPath) == "string") then
 		return
 	end
 
@@ -171,10 +175,9 @@ with the `Player` as argument if the types differ.
 @return boolean? -- True if data was set successfully, otherwise nil
 ]=]
 function RelayServer:setValueFromStringIndex(Player: Player, stringPath: string, value: any)
-	local Whitelist = self.Whitelist
 	local module = self.Module
 
-	if Whitelist and (not self:propertyChangeAllowed(stringPath, Whitelist)) then
+	if not (self:propertyChangeAllowed(stringPath)) then
 		warn(`Blocked unauthorized path: "{stringPath}"`)
 		return
 	end

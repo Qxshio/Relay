@@ -30,7 +30,7 @@ Constructs a new RelayClient instance
 @param GUID string | Instance -- The unique identifier for the RelayClient instance
 @param module RelayModule -- The table of functions the server will be communicating with
 
-@return RelayClient  
+@return RelayClient
 ]=]
 function RelayClient.new(GUID: string | Instance, module: {})
 	assert(
@@ -64,17 +64,18 @@ function RelayClient.new(GUID: string | Instance, module: {})
 
 	remoteEvent.OnClientEvent:Connect(function(method: string, key: string, ...: any?)
 		if method == RelayUtil.TAG_SET then
-			local value = RelayUtil:getIndexValueFromString(key, module)
-			local old = value
-			value = ...
+			local path, lastKey = RelayUtil:getIndexValueFromString(key, self.Module)
+			local old = path[lastKey]
+			path[lastKey] = ...
+
 			if self._changedSignals[key] then
-				self._changedSignals[key]:Fire(old, value)
+				self._changedSignals[key]:Fire(old, path[lastKey])
 			end
 			return
 		end
 
-		assert(module[method], `Method "{method}" does not exist on GUID {remotes.Name}`)
-		module[method](key, ...)
+		assert(self.Module[method], `Method "{method}" does not exist on GUID {remotes.Name}`)
+		self.Module[method](self.Module, key, ...)
 	end)
 	return self
 end
@@ -86,12 +87,12 @@ Retrieves and/or creates a Signal that is fired whenever the server changes any 
 @within RelayClient
 @return Signal
 ]=]
-function RelayClient:getServerChangedSignal<T>(key: string): Signal.Signal<T>
+function RelayClient:getServerChangedSignal<T>(key: string)
 	if not self._changedSignals[key] then
 		self._changedSignals[key] = Signal.new()
 	end
 
-	return self._changedSignals[key]
+	return self._changedSignals[key] :: Signal.Signal<T>
 end
 
 --[=[
