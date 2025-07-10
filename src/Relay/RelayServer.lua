@@ -11,6 +11,10 @@ end
 local RelayUtil = require(script.Parent.RelayUtil)
 local Sift = require(script.Parent.Packages.Sift)
 
+type RelayModule = RelayUtil.RelayModule
+type RelayWhitelist = RelayUtil.RelayWhitelist
+type PlayerGroup = RelayUtil.PlayerGroup
+
 --[=[
 RelayServer simplifies the usage of server-sided communication via establishing networking requests in service/module format.
 
@@ -22,42 +26,7 @@ RelayServer.__index = RelayServer
 export type RelayServer = typeof(RelayServer)
 
 --[=[
-@type RelayModule<T> { any }  -- The module containing all methods/properties that will be replicated
-@within RelayServer
-]=]
-export type RelayModule<T> = { any }
-
---[=[
-@type RelayWhitelist<T> { any: (any) -> any }
-@within RelayServer
-]=]
-export type RelayWhitelist<T> = { any: (any) -> any }
-
---[=[
-@type RelayWhitelist<T> { any: (any) -> any }
-@within RelayServer
-]=]
-export type RelayBlacklist<T> = { any: (any) -> any }
-
---[=[
-@type PlayerGroup {Player} | Player
-@within RelayServer
-]=]
-export type PlayerGroup = { Player } | Player
-
---[=[
 Constructs a new RelayServer instance
-
-✅ Example:
-```lua
-local FoodService = {
-	["FoodTypes"] = {
-		"Apples" = 1,
-		"Oranges" = 2
-	},
-}
-local Relay = Relay.server.new("DataService@1.0", FoodService, {"FoodTypes.*"}, {"FoodTypes.Oranges"}) -- Client can get/edit any food type value except for Oranges
-```
 
 @within RelayServer
 @param GUID string | Instance -- The unique identifier for the RelayServer instance
@@ -67,9 +36,9 @@ local Relay = Relay.server.new("DataService@1.0", FoodService, {"FoodTypes.*"}, 
 ]=]
 function RelayServer.new(
 	GUID: string | Instance,
-	Module: RelayModule<{ any }>,
-	Whitelist: RelayWhitelist<{ any }>?,
-	Blacklist: RelayBlacklist<{ any }>?
+	Module: RelayModule,
+	Whitelist: RelayWhitelist?,
+	Blacklist: {}?
 ): RelayServer
 	assert(
 		GUID and (typeof(GUID) == "string" or typeof(GUID) == "Instance"),
@@ -116,7 +85,7 @@ function RelayServer.new(
 			local args = { ... }
 			local stringPath = args[1]
 			local value = args[2]
-			self:setValueFromStringIndex(player, stringPath, value)
+			self:setValueFromStringIndex(player, stringPath, value, true)
 			return
 		end
 
@@ -162,6 +131,7 @@ Patterns may include wildcards (`*`) to allow for flexible matching, e.g., `"Pla
 
 @within RelayServer
 @param stringPath string -- The dot-separated string path to check
+@param list {any} -- The list to check (blacklist/whitelist etc)
 @return boolean? -- Returns `true` if the path is allowed, `false` otherwise; returns `nil` if the whitelist is not provided
 ]=]
 function RelayServer:propertyChangeAllowed(stringPath: string)
@@ -202,12 +172,13 @@ with the `Player` as argument if the types differ.
 @param Player Player -- The player attempting to set the value (used for integrity flagging)
 @param stringPath string -- The stringPath of the data you want to set
 @param value any -- The new value to set the index
+@param fromClient boolean -- Whether or not this function should enable security or not
 @return boolean? -- True if data was set successfully, otherwise nil
 ]=]
-function RelayServer:setValueFromStringIndex(Player: Player, stringPath: string, value: any)
+function RelayServer:setValueFromStringIndex(Player: Player, stringPath: string, value: any, fromClient: boolean?)
 	local module = self.Module
 
-	if not (self:propertyChangeAllowed(stringPath)) then
+	if (not (self:propertyChangeAllowed(stringPath))) and fromClient then
 		warn(`Blocked unauthorized path: "{stringPath}"`)
 		return
 	end
@@ -221,7 +192,7 @@ function RelayServer:setValueFromStringIndex(Player: Player, stringPath: string,
 	local old = path[lastKey]
 	local flagFunc = self._referentialIntegrityFlag
 
-	if flagFunc and old then
+	if flagFunc and old and fromClient then
 		local correctType = typeof(old)
 		local newType = typeof(value)
 
@@ -320,12 +291,6 @@ end
 
 --[=[
 Sets a value for all provided players
-
-✅ Example:
-```lua
-Relay:set(Player, "FoodTypes.Oranges", 2)
-```
-
 @param players PlayerGroup -- The players to include in the setting
 @param stringPath string -- The name of the value that will be set
 @param value any? -- The value to set index to

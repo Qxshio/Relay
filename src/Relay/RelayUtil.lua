@@ -1,3 +1,9 @@
+export type RelayModule = { any: (any) -> any }
+
+export type RelayWhitelist = { any: (any) -> any }
+
+export type PlayerGroup = { Player } | Player
+
 --[=[
 Includes useful shared resources
 
