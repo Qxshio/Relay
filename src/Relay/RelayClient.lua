@@ -81,18 +81,30 @@ function RelayClient.new(GUID: string | Instance, module: {})
 end
 
 --[=[
-Retrieves and/or creates a Signal that is fired whenever the server changes any values on the client
+Retrieves and/or creates a Signal that is fired whenever the server changes any values on the client.
+⚠️ You won't need to update your client module as Relay will do this for you automatically
+
+✅ Example:
+```lua
+local Health = 100
+RelayClient:getServerChangedSignal("FoodTypes.Oranges"):Connect(function(oldValue, newValue)
+	if newValue < oldValue then
+		Health = math.clamp(Health + 25, 0, 100)
+	end
+end)
+```
+
 @param key string -- The value to listen to, should it be changed by the server
 
 @within RelayClient
 @return Signal
 ]=]
-function RelayClient:getServerChangedSignal<T>(key: string)
+function RelayClient:getServerChangedSignal<T>(key: string): Signal.Signal<T>
 	if not self._changedSignals[key] then
 		self._changedSignals[key] = Signal.new()
 	end
 
-	return self._changedSignals[key] :: Signal.Signal<T>
+	return self._changedSignals[key]
 end
 
 --[=[
@@ -110,7 +122,7 @@ end
 --[=[
 Fetches the returned server method function value with the given parameters
 @param method string The method to call
-@param ... any? The parameters to call the method with
+@param ... any? The parameters to call the method withW
 
 @within RelayClient
 @return ()  
