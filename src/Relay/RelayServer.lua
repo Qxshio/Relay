@@ -131,7 +131,6 @@ Patterns may include wildcards (`*`) to allow for flexible matching, e.g., `"Pla
 
 @within RelayServer
 @param stringPath string -- The dot-separated string path to check
-@param list {any} -- The list to check (blacklist/whitelist etc)
 @return boolean? -- Returns `true` if the path is allowed, `false` otherwise; returns `nil` if the whitelist is not provided
 ]=]
 function RelayServer:propertyChangeAllowed(stringPath: string)
