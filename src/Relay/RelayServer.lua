@@ -17,11 +17,10 @@ type PlayerGroup = RelayUtil.PlayerGroup
 
 --[=[
 RelayServer simplifies the usage of server-sided communication via establishing networking requests in service/module format.
-Inspired by leifstout
 
 @class RelayServer  
 ]=]
-local RelayServer = {}
+local RelayServer = { RelayUtil = RelayUtil }
 RelayServer.__index = RelayServer
 
 export type RelayServer = typeof(RelayServer)
@@ -29,6 +28,7 @@ export type RelayServer = typeof(RelayServer)
 --[=[
 Constructs a new RelayServer instance
 
+@within RelayServer
 @param GUID string | Instance -- The unique identifier for the RelayServer instance
 @param Module RelayModule -- The table of functions the client will be communicating with
 @param Whitelist RelayWhitelist? -- The methods that the client is allowed to call
@@ -127,17 +127,18 @@ Determines if a property change is allowed based on a whitelist of string patter
 This function checks whether a given `stringPath` matches any of the patterns in the provided whitelist/blacklist.
 Patterns may include wildcards (`*`) to allow for flexible matching, e.g., `"Player.*.Health"`.
 
+@within RelayServer
 @param stringPath string -- The dot-separated string path to check
-@param Whitelist {} -- An array of string patterns to match against
+@param list {any} -- The list to check (blacklist/whitelist etc)
 @return boolean? -- Returns `true` if the path is allowed, `false` otherwise; returns `nil` if the whitelist is not provided
 ]=]
-function RelayServer:propertyChangeAllowed(stringPath: string, Whitelist: {})
+function RelayServer:propertyChangeAllowed(stringPath: string, List: { any })
 	local allowed = false
-	if not Whitelist then
+	if not List then
 		return
 	end
 
-	for _, pattern in ipairs(Whitelist) do
+	for _, pattern in ipairs(List) do
 		if not (typeof(pattern) == "string") then
 			continue
 		end
@@ -149,7 +150,7 @@ function RelayServer:propertyChangeAllowed(stringPath: string, Whitelist: {})
 			break
 		end
 	end
-	return Whitelist and allowed
+	return List and allowed
 end
 
 --[=[
@@ -163,68 +164,70 @@ If `RelayServer._referentialIntegrityFlag` is defined, it performs a type check 
 ensure the new value matches the existing value’s type, and triggers the flag function
 with the `Player` as argument if the types differ.
 
+@within RelayServer
 @param Player Player -- The player attempting to set the value (used for integrity flagging)
-@param module table -- The root table to navigate and update
-@param Whitelist table? -- Optional list of allowed path patterns to restrict access
-@param ... any -- Additional arguments where the first is `stringPath` (dot-separated string path), and second is `value` to set
+@param stringPath string -- The stringPath of the data you want to set
+@param value any -- The new value to set the index
+@return boolean? -- True if data was set successfully, otherwise nil
 ]=]
-function RelayServer:setValueFromStringIndex(Player: Player, module: {}, Whitelist: {}?, ...)
-	local args = { ... }
-	local stringPath = args[1]
-	local value = args[2]
+function RelayServer:setValueFromStringIndex(Player: Player, stringPath: string, value: any)
+	local Whitelist = self.Whitelist
+	local module = self.Module
 
 	if Whitelist and (not self:propertyChangeAllowed(stringPath, Whitelist)) then
 		warn(`Blocked unauthorized path: "{stringPath}"`)
 		return
 	end
 
-	local path, lastKey = self:getIndexValueFromString(stringPath, module)
+	local path, lastKey = RelayUtil:getIndexValueFromString(stringPath, module)
+	if not (path and lastKey) then
+		warn(`Failed to find path for {stringPath}`)
+		return
+	end
 
-	if typeof(path) == "table" then
-		local old = path[lastKey]
-		local flagFunc = self._referentialIntegrityFlag
+	local old = path[lastKey]
+	local flagFunc = self._referentialIntegrityFlag
 
-		if flagFunc and old then
-			local correctType = typeof(old)
-			local newType = typeof(value)
+	if flagFunc and old then
+		local correctType = typeof(old)
+		local newType = typeof(value)
 
-			if not (newType == correctType) then
+		if not (newType == correctType) then
+			task.spawn(flagFunc, Player)
+			return
+		end
+
+		if correctType == "table" then
+			local function map(t)
+				return Sift.Dictionary.map(t, function(val)
+					return typeof(val)
+				end)
+			end
+
+			local t1 = map(old)
+			local t2 = map(table.clone(path[lastKey]))
+
+			if not (Sift.Dictionary.equals(t1, t2)) then
 				task.spawn(flagFunc, Player)
 				return
 			end
-
-			if correctType == "table" then
-				local function map(t)
-					return Sift.Dictionary.map(t, function(val)
-						return typeof(val)
-					end)
-				end
-
-				local t1 = map(old)
-				local t2 = map(table.clone(path[lastKey]))
-
-				if not (Sift.Dictionary.equals(t1, t2)) then
-					task.spawn(flagFunc, Player)
-					return
-				end
-				path = value
-				return
-			end
+			path[lastKey] = value
+			return true
 		end
-
-		path[lastKey] = value
-	else
-		warn(`Cannot set value at path "{stringPath}", parent is not a table`)
 	end
+
+	path[lastKey] = value
+	return true
 end
 
 --[=[
-	Sets a callback function to enforce referential integrity during value assignment.
+Sets a callback function to enforce referential integrity during value assignment.
 
-	When a value is set via `setValueFromStringIndex`, this callback is invoked if the
-	new value's type does not match the existing value's type at the target path.
+When a value is set via `setValueFromStringIndex`, this callback is invoked if the
+new value's type does not match the existing value's type at the target path.
 
-	@param Callback (Player) -> () -- A function called with the Player when a type mismatch occurs
+@within RelayServer
+@param Callback (Player) -> () -- A function called with the Player when a type mismatch occurs
 ]=]
 function RelayServer:enforceReferentialIntegrity(Callback: any?)
 	self._referentialIntegrityFlag = Callback
@@ -239,6 +242,7 @@ Communicates to the provided client(s) using the given method and parameters (..
 @param method string -- The method to call
 @param ... any? -- The parameters to call the method with
 
+@within RelayServer
 @return ()  
 ]=]
 function RelayServer:fire(players: PlayerGroup, method: string, ...: any?): ()
@@ -257,6 +261,7 @@ Communicates to all clients using the given method and parameters (...)
 @param method string -- The method to call
 @param ... any? -- The parameters to call the method with
 
+@within RelayServer
 @return ()  
 ]=]
 function RelayServer:fireAll(method: string, ...: any?): ()
@@ -269,6 +274,7 @@ Communicates to all clients except the players provided using the given method a
 @param method string -- The method to call
 @param ... any? -- The parameters to call the method with
 
+@within RelayServer
 @return ()  
 ]=]
 function RelayServer:fireAllExcept(players: PlayerGroup, method: string, ...: any?): ()
@@ -285,6 +291,7 @@ Sets a value for all provided players
 @param stringPath string -- The name of the value that will be set
 @param value any? -- The value to set index to
 
+@within RelayServer
 @return ()  
 ]=]
 function RelayServer:set(players: PlayerGroup, stringPath: string, value: any)
@@ -296,6 +303,7 @@ Sets a value for all players
 @param stringPath string -- The name of the value that will be set
 @param value any? -- The value to set index to
 
+@within RelayServer
 @return ()  
 ]=]
 function RelayServer:setAll(stringPath: string, value: any)
@@ -308,6 +316,7 @@ Sets a value for all players except the provided players
 @param stringPath string -- The name of the value that will be set
 @param value any? -- The value to set index to
 
+@within RelayServer
 @return ()  
 ]=]
 function RelayServer:setAllExcept(players: PlayerGroup, stringPath: string, value: any)
@@ -317,6 +326,7 @@ end
 --[=[
 Destroys the RelayServer  
 
+@within RelayServer
 @return ()  
 ]=]
 function RelayServer:destroy(): ()

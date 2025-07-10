@@ -1,3 +1,4 @@
+local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 
 local Packages = script.Parent.Packages
@@ -11,7 +12,7 @@ Inspired by leifstout
 
 @class RelayClient
 ]=]
-local RelayClient = { _changedSignals = {} }
+local RelayClient = { _changedSignals = {}, RelayUtil = RelayUtil }
 RelayClient.__index = RelayClient
 
 export type RelayClient = typeof(setmetatable(
@@ -50,6 +51,8 @@ function RelayClient.new(GUID: string | Instance, module: {})
 	if typeof(GUID) == "Instance" then
 		self.GUID = GUID.Name
 	end
+
+	self.Module = module
 
 	local remotes = script.Parent._comm:WaitForChild(self.GUID)
 	self.remotes = remotes
@@ -127,6 +130,23 @@ function RelayClient:postDataAsync(path: string, value: any)
 	assert(path and value, `Path or value missing for setServerData`)
 	assert(typeof(path) == "string", `Path "{path}" must be a string, e.g: Settings.MaxVolume`)
 	self.remotes.RemoteFunction:InvokeServer(RelayUtil.TAG_SET, path, value)
+end
+
+--[=[
+Sets a value in a nested table structure using a dot-separated string path.
+
+This function navigates through the given `module` table according to `stringPath`,
+and sets the specified `value` at the targeted key.
+
+@within RelayClient
+@param stringPath string -- The stringPath of the data you want to set
+@param value any -- The new value to set the index
+]=]
+function RelayClient:setValueFromStringIndex(stringPath: string, value: any)
+	local module = self.Module
+	local path, lastKey = RelayUtil:getIndexValueFromString(stringPath, module)
+
+	path[lastKey] = value
 end
 
 --[=[

@@ -43,7 +43,7 @@ function RelayUtil:getIndexValueFromString(stringPath: string, module: {})
 		current = current[key]
 	end
 
-	return current[path[#path]]
+	return current, path[#path]
 end
 
 return RelayUtil
